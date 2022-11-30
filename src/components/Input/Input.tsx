@@ -1,16 +1,35 @@
 import {Label} from "../Label/Label";
+import {FileInput} from "./FileInput/FileInput";
 
-export type TInputValue = string | {}
-export type TInputType = 'text' | 'img'
+export type TStatuses = null | 'waiting' | 'success' | 'error'
+const getBtnClass = (status: TStatuses | undefined) => {
+    const statusToClass = {
+        null: 'primary',
+        waiting: 'warning opacity-50',
+        success: 'success opacity-50',
+        error: 'danger opacity-50',
+    }
+    return statusToClass[status || 'null']
+}
+
+export type TInputValue = string | File
+export type TInputType = 'text' | 'img' | 'btn'
 
 export type TInput = {
     id: string,
     label: string,
     placeholder?: string,
     type: TInputType,
-    //value: string | null, // TODO or file obj
     disabled?: boolean,
-    rows?: number
+
+    // multiline input
+    rows?: number,
+
+    // btn
+    status?: TStatuses,
+    onClick?: () => void,
+
+    // we can use interfaces and extends them, but not today
 }
 
 const textInputStyle = {
@@ -21,7 +40,7 @@ const textInputStyle = {
 
 export const Input = (
     {
-        config: {label, placeholder, type, disabled, rows},
+        config: {label, placeholder, type, disabled, rows, status, onClick},
         value,
         setValue
     }: {
@@ -55,6 +74,30 @@ export const Input = (
                             style={textInputStyle}
                         />
                 ) : null
+            }
+
+            {
+                type === 'img' &&
+                <div className="px-4 py-3" style={{...textInputStyle, maxWidth: "8rem"}}>
+                    <FileInput
+                        img={value}
+                        set={img => {setValue(img)}}
+                    />
+                </div>
+            }
+
+            {
+                type === 'btn' &&
+                <div
+                    className={`p-3 d-flex justify-content-center align-items-center bg-${getBtnClass(status)}`}
+                    style={{
+                        ...textInputStyle,
+                        cursor: 'pointer'
+                    }}
+                    onClick={onClick}
+                >
+                    {label}
+                </div>
             }
         </div>
     )
