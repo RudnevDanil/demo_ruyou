@@ -5,6 +5,7 @@ import {Home} from "./pages/Home/Home";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Form} from "./pages/Form/Form";
 import "./App.css"
+import {Palette} from "./pages/Palette/Palette";
 
 export default function App() {
   return (
@@ -36,7 +37,7 @@ export default function App() {
                 <Routes>
                     <Route path="*" element={<Navbar/>}>
                         <Route path="form" element={<Form/>}/>
-                        <Route path="palette" element={<Home/>}/>
+                        <Route path="palette" element={<Palette/>}/>
                         <Route path="*" element={<PageNotFound/>}/>
                     </Route>
                 </Routes>
