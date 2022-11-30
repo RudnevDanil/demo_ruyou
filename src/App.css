@@ -1,0 +1,7 @@
+.text-grey{
+    color: rgba(235, 235, 245, 0.6);
+}
+
+input, textarea {
+    all: unset;
+}
