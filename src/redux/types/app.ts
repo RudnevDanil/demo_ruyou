@@ -1,0 +1,1 @@
+export const LOADING_LOGOS_DONE = 'LOADING_LOGOS_DONE'
